@@ -1,16 +1,31 @@
 {
 	"name": "supercell-api-scraper",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"description": "A supercell games scraper that has additional calculations and info, easy to use methods. [BETA]",
 	"main": "dist/main.js",
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1"
+		"supercell": "echo Thanks for using supercell-api-scraper"
 	},
 	"type": "module",
-	"keywords": [],
-	"author": "",
-	"license": "ISC",
+	"keywords": [
+		"supercell",
+		"clash of clans",
+		"clash royale",
+		"brawl stars"
+	],
+	"author": "Dummi",
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/TheDummi/supercell-api-scraper.git"
+	},
+	"bugs": {
+		"url": "https://github.com/TheDummi/supercell-api-scraper/issues"
+	},
+	"homepage": "https://github.com/TheDummi/supercell-api-scraper#readme",
 	"dependencies": {
 		"got": "^12.5.0"
-	}
+	},
+	"packageManager": "npm@8.15.0",
+	"markdown": "github"
 }
