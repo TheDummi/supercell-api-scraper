@@ -2,6 +2,12 @@ import CoCAssets from "../data/CoC/assets.js";
 import { Games } from "../data/Games.js";
 import fetch from "../models/Fetch.js";
 
+/**
+ *
+ * @param {string} tag - An account tag of any game.
+ * @description will find the game the tag is from.
+ * @returns name, tag and game tag is validated on.
+ */
 export async function validatePlayerTag(tag: string) {
 	let player;
 	for (const game of [
@@ -26,6 +32,11 @@ export async function validatePlayerTag(tag: string) {
 	else return player.code;
 }
 
+/**
+ *
+ * @param {string} tag - An account tag of any game.
+ * @returns info on the tag
+ */
 export async function fetchChief(tag: string) {
 	let chief = await fetch(Games.ClashOfClans, "players", { tag });
 
@@ -34,12 +45,22 @@ export async function fetchChief(tag: string) {
 	return chief;
 }
 
+/**
+ *
+ * @param {string} tag - An account tag of any game.
+ * @returns info on the tag
+ */
 export async function fetchKing(tag: string) {
 	const king = await fetch(Games.ClashRoyale, "players", { tag });
 
 	return king;
 }
 
+/**
+ *
+ * @param {string} tag - An account tag of any game.
+ * @returns info on the tag
+ */
 export async function fetchBrawler(tag: string) {
 	const user = await fetch(Games.BrawlStars, "players", { tag });
 
