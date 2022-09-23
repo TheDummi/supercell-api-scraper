@@ -1,6 +1,6 @@
 import Collection from "./data/Collection.js";
 import {
-	validateTag,
+	validatePlayerTag,
 	fetchKing,
 	fetchChief,
 	fetchBrawler,
@@ -23,7 +23,7 @@ export default class SupercellHandler {
 			([game, value]) => (Collection[game.toLowerCase()] = value)
 		);
 
-		this.validateTag = validateTag;
+		this.validatePlayerTag = validatePlayerTag;
 		this.fetchChief = fetchChief;
 		this.fetchKing = fetchKing;
 		this.fetchBrawler = fetchBrawler;

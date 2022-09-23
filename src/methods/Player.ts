@@ -2,7 +2,7 @@ import CoCAssets from "../data/CoC/assets.js";
 import { Games } from "../data/Games.js";
 import fetch from "../models/Fetch.js";
 
-export async function validateTag(tag: string) {
+export async function validatePlayerTag(tag: string) {
 	let player;
 	for (const game of [
 		Games.ClashOfClans,
