@@ -2,6 +2,13 @@ import CoCAssets from "../data/CoC/assets.js";
 import { Games } from "../data/Games.js";
 import fetch from "../models/Fetch.js";
 
+export default {
+	validatePlayerTag,
+	fetchChief,
+	fetchKing,
+	fetchBrawler,
+};
+
 /**
  *
  * @param {string} tag - An account tag of any game.
@@ -51,7 +58,9 @@ export async function fetchChief(tag: string) {
  * @returns info on the tag
  */
 export async function fetchKing(tag: string) {
-	const king = await fetch(Games.ClashRoyale, "players", { tag });
+	let king = await fetch(Games.ClashRoyale, "players", { tag });
+
+	king = crModify(king);
 
 	return king;
 }
@@ -96,9 +105,9 @@ function cocModify(data: any) {
 					: "bh" + (data.builderHallLevel - 1)
 			];
 
-		unit.limitLevel = limitLevel;
+		unit.limitLevel = limitLevel || 0;
 
-		unit.previousLevel = previousLevel;
+		unit.previousLevel = previousLevel || 0;
 
 		unit.state =
 			unit.level == unit.maxLevel
@@ -161,33 +170,110 @@ function cocModify(data: any) {
 
 	data.clan.warPreference = data.warPreference;
 
-	delete data.troops;
-	delete data.spells;
-	delete data.heroes;
-	delete data.townHallLevel;
-	delete data.townHallWeaponLevel;
-	delete data.trophies;
-	delete data.bestTrophies;
-	delete data.builderHallLevel;
-	delete data.versusTrophies;
-	delete data.bestVersusTrophies;
-	delete data.versusBattleWinCount;
-	delete data.versusBattleWins;
-	delete data.role;
-	delete data.attackWins;
-	delete data.defenseWins;
-	delete data.donations;
-	delete data.donationsReceived;
-	delete data.tag;
-	delete data.name;
-	delete data.expLevel;
-	delete data.warStars;
-	delete data.warPreference;
-	delete data.labels;
-	delete data.league;
-	delete data.clanCapitalContributions;
+	[
+		"troops",
+		"spells",
+		"heroes",
+		"townHallLevel",
+		"townHallWeaponLevel",
+		"trophies",
+		"bestTrophies",
+		"builderHallLevel",
+		"versusTrophies",
+		"bestVersusTrophies",
+		"versusBattleWinCount",
+		"versusBattleWins",
+		"role",
+		"attackWins",
+		"defenseWins",
+		"donations",
+		"donationsReceived",
+		"tag",
+		"name",
+		"expLevel",
+		"warStars",
+		"warPreference",
+		"labels",
+		"league",
+		"clanCapitalContributions",
+	].map((i) => delete data[i]);
 
-	delete data.achievements;
+	return data;
+}
+
+function crModify(data: any) {
+	const units: object[] = [];
+
+	data.profile = {
+		tag: data.tag,
+		name: data.name,
+		level: data.expLevel,
+		xp: data.expPoints,
+		trophies: data.trophies,
+		record: data.bestTrophies,
+		wins: data.wins,
+		losses: data.losses,
+		battles: data.battleCount,
+		triples: data.threeCrownWins,
+		starPoints: data.starPoints,
+		yearsPlayed:
+			data.badges.find((b: any) => b.name === "YearsPlayed")?.level || 0,
+		challenge: {
+			cards: data.challengeCardsWon,
+			streak: data.challengeMaxWins,
+		},
+		tournament: {
+			cards: data.tournamentCardsWon,
+			battles: data.tournamentBattleCount,
+		},
+		clan: {
+			donations: data.totalDonations,
+			warWins: data.warDayWins,
+			cards: data.clanCardsCollected,
+		},
+	};
+
+	data.currentSeason = {
+		donations: data.donations,
+		donationsReceived: data.donationsReceived,
+	};
+
+	data.clan.role = data.role;
+
+	data.cards.map((card: any) => {
+		card.progress = `${
+			Math.round((card.level / card.maxLevel) * 10000) / 100
+		}%`;
+
+		units.push(card);
+	});
+
+	data.units = units;
+
+	[
+		"tag",
+		"name",
+		"expLevel",
+		"trophies",
+		"bestTrophies",
+		"wins",
+		"losses",
+		"battleCount",
+		"threeCrownWins",
+		"challengeCardsWon",
+		"challengeMaxWins",
+		"tournamentCardsWon",
+		"tournamentBattleCount",
+		"role",
+		"donations",
+		"donationsReceived",
+		"totalDonations",
+		"warDayWins",
+		"clanCardsCollected",
+		"cards",
+		"starPoints",
+		"expPoints",
+	].map((i) => delete data[i]);
 
 	return data;
 }
