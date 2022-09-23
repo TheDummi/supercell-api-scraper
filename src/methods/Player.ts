@@ -71,9 +71,11 @@ export async function fetchKing(tag: string) {
  * @returns info on the tag
  */
 export async function fetchBrawler(tag: string) {
-	const user = await fetch(Games.BrawlStars, "players", { tag });
+	let brawler = await fetch(Games.BrawlStars, "players", { tag });
 
-	return user;
+	brawler = bsModify(brawler);
+
+	return brawler;
 }
 
 function cocModify(data: any) {
@@ -274,6 +276,20 @@ function crModify(data: any) {
 		"starPoints",
 		"expPoints",
 	].map((i) => delete data[i]);
+
+	return data;
+}
+
+function bsModify(data: any) {
+	data.profile = {};
+
+	Object.entries(data).map(([key, value]) => {
+		if (!["club", "brawlers", "profile"].includes(key)) {
+			data.profile[key] = value;
+
+			delete data[key];
+		}
+	});
 
 	return data;
 }
