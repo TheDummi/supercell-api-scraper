@@ -1,8 +1,9 @@
 import Collection from "./data/Collection.js";
 
-import Player from "./methods/Player.js";
-
-export { Player };
+import Player from "./models/Player.js";
+import Status from "./models/Status.js";
+import Guild from "./models/Guild.js";
+export { Player, Status, Guild };
 
 interface Game {
 	clashOfClans?: string;
