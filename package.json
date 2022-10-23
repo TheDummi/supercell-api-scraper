@@ -24,7 +24,7 @@
 	},
 	"homepage": "https://github.com/TheDummi/supercell-api-scraper#readme",
 	"dependencies": {
-		"got": "^12.5.0"
+		"got": "^12.5.2"
 	},
 	"packageManager": "npm@8.15.0"
 }

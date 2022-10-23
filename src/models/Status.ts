@@ -17,14 +17,14 @@ export async function all() {
 	};
 }
 
-export async function clashOfClans() {
+async function clashOfClans() {
 	return statusCodes(await fetch(Games.ClashOfClans, "leagues", {}));
 }
 
-export async function clashRoyale() {
+async function clashRoyale() {
 	return statusCodes(await fetch(Games.ClashRoyale, "cards", {}));
 }
 
-export async function brawlStars() {
+async function brawlStars() {
 	return statusCodes(await fetch(Games.BrawlStars, "brawlers", {}));
 }
