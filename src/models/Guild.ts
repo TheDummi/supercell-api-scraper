@@ -16,13 +16,9 @@ export async function findAll(tag: string) {
 		Games.ClashRoyale,
 		Games.BrawlStars,
 	]) {
-		const guild: any = await fetch(
-			game,
-			game == "BrawlStars" ? "clubs" : "clans",
-			{
-				tag,
-			}
-		);
+		const guild = await fetch(game, game == "BrawlStars" ? "clubs" : "clans", {
+			tag,
+		});
 
 		if (guild.tag || guild?.profile?.tag)
 			guilds.push({

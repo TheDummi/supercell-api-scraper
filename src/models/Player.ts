@@ -23,7 +23,7 @@ export async function findAll(tag: string) {
 		Games.ClashRoyale,
 		Games.BrawlStars,
 	]) {
-		const player: any = await fetch(game, "players", {
+		const player = await fetch(game, "players", {
 			tag,
 		});
 
@@ -243,13 +243,15 @@ function crModify(data: any) {
 
 	data.clan.role = data.role;
 
-	data.cards.map((card: any) => {
-		card.progress = `${
-			Math.round((card.level / card.maxLevel) * 10000) / 100
-		}%`;
+	data.cards.map(
+		(card: { progress: string; level: number; maxLevel: number }) => {
+			card.progress = `${
+				Math.round((card.level / card.maxLevel) * 10000) / 100
+			}%`;
 
-		units.push(card);
-	});
+			units.push(card);
+		}
+	);
 
 	data.units = units;
 

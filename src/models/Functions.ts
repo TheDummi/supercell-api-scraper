@@ -1,4 +1,4 @@
-export function statusCodes(status: any) {
+export function statusCodes(status: { message: string }) {
 	if (!status.message) return { online: true, info: "Service available" };
 	else if (status.message.includes("403"))
 		return { online: false, info: "Service access denied" };
