@@ -1,31 +1,36 @@
 import { Games } from "../data/Games.js";
 import fetch from "./Fetch.js";
-export default {
-	clashOfClans,
-	clashRoyale,
-	brawlStars,
-};
 
-async function clashOfClans() {
-	const start = Date.now();
+export default new (class Ping {
+	async all() {
+		return [
+			{ ClashOfClans: await this.ClashOfClans() },
+			{ ClashRoyale: await this.ClashRoyale() },
+			{ BrawlStars: await this.BrawlStars() },
+		];
+	}
 
-	await fetch(Games.ClashOfClans, "leagues", {});
+	async ClashOfClans() {
+		const start = Date.now();
 
-	return Date.now() - start;
-}
+		await fetch(Games.ClashOfClans, "leagues", {});
 
-async function clashRoyale() {
-	const start = Date.now();
+		return Date.now() - start;
+	}
 
-	await fetch(Games.ClashRoyale, "cards", {});
+	async ClashRoyale() {
+		const start = Date.now();
 
-	return Date.now() - start;
-}
+		await fetch(Games.ClashRoyale, "cards", {});
 
-async function brawlStars() {
-	const start = Date.now();
+		return Date.now() - start;
+	}
 
-	await fetch(Games.BrawlStars, "brawlers", {});
+	async BrawlStars() {
+		const start = Date.now();
 
-	return Date.now() - start;
-}
+		await fetch(Games.BrawlStars, "brawlers", {});
+
+		return Date.now() - start;
+	}
+})();

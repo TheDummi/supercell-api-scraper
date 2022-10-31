@@ -1,7 +1,7 @@
-interface Col {
+interface Collected {
 	[index: string]: object;
 }
 
-const Collection: Col = {};
+const Collection: Collected = {};
 
 export default Collection;

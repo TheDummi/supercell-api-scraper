@@ -1,19 +1,16 @@
 import { Games } from "../data/Games.js";
 import Collection from "../data/Collection.js";
 import got from "got";
+import { statusCodes } from "./Functions.js";
+import { Options, Request } from "../interfaces/fetch.js";
 
-interface Options {
-	tag?: string;
-	domain?: string;
-	subdomain?: string;
-	id?: string;
-}
-
-interface Request {
-	url?: string;
-	key?: unknown;
-}
-
+/**
+ * A function to fetch API data from a supercell domain.
+ * @param {Games} game - The game to read the API from.
+ * @param {string} domain  - The domain you want to read.
+ * @param {Options} options - Options for more and unique URLs.
+ * @returns API data.
+ */
 export default async function fetch(
 	game: Games,
 	domain: string,
@@ -33,8 +30,6 @@ export default async function fetch(
 
 	if (options.subdomain) options.domain += "/" + options.subdomain;
 
-	// console.log(request.url + domain + options.domain);
-
 	try {
 		response = await got.get({
 			url: request.url + domain + options.domain,
@@ -45,8 +40,8 @@ export default async function fetch(
 		});
 
 		response = JSON.parse(response.body);
-	} catch (error) {
-		response = error;
+	} catch (error: any) {
+		response = statusCodes(error);
 	}
 
 	return response;

@@ -18,3 +18,9 @@ export enum FormattedGames {
 	ClashRoyale = "Clash Royale",
 	BrawlStars = "Brawl Stars",
 }
+
+export interface Game {
+	clashOfClans?: string;
+	clashRoyale?: string;
+	brawlStars?: string;
+}

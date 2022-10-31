@@ -1,7 +1,9 @@
 import { FormattedGames, Games } from "../data/Games.js";
 
-export function formatGame(game: Games) {
-	(game as string) = game.toLowerCase();
+export default new (class Util {
+	formatGame(game: Games) {
+		(game as string) = game.toLowerCase();
 
-	return FormattedGames[Games[game]];
-}
+		return FormattedGames[Games[game]];
+	}
+})();
