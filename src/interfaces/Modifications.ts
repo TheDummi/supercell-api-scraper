@@ -10,6 +10,8 @@ export interface ClashOfClansModification {
 	units: Array<ClashOfClansTroop>;
 	townHallLevel?: number;
 	builderHallLevel?: number;
+	wins?: number;
+	achievements: Array<object>;
 }
 
 /**

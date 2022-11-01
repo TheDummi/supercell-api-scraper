@@ -86,6 +86,12 @@ export default new (class Player {
 			};
 		});
 
+		const win: { value?: number } = data.achievements.find(
+			(a: any) => a.name === "Conqueror"
+		) || { value: 0 };
+
+		data.wins = win.value;
+
 		delete data.troops;
 		delete data.heroes;
 		delete data.spells;
