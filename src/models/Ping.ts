@@ -1,5 +1,5 @@
 import { Games } from "../data/Games.js";
-import fetch from "./Fetch.js";
+import Game from "./Game.js";
 
 export default new (class Ping {
 	async all() {
@@ -13,7 +13,7 @@ export default new (class Ping {
 	async ClashOfClans() {
 		const start = Date.now();
 
-		await fetch(Games.ClashOfClans, "leagues", {});
+		await Game.fetch(Games.ClashOfClans, "leagues", {});
 
 		return Date.now() - start;
 	}
@@ -21,7 +21,7 @@ export default new (class Ping {
 	async ClashRoyale() {
 		const start = Date.now();
 
-		await fetch(Games.ClashRoyale, "cards", {});
+		await Game.fetch(Games.ClashRoyale, "cards", {});
 
 		return Date.now() - start;
 	}
@@ -29,7 +29,7 @@ export default new (class Ping {
 	async BrawlStars() {
 		const start = Date.now();
 
-		await fetch(Games.BrawlStars, "brawlers", {});
+		await Game.fetch(Games.BrawlStars, "brawlers", {});
 
 		return Date.now() - start;
 	}

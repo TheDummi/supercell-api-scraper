@@ -1,5 +1,5 @@
 import { Games } from "../data/Games.js";
-import fetch from "./Fetch.js";
+import Game from "./Game.js";
 
 /**
  * The Class constructor for anything to do with a Guild.
@@ -18,7 +18,7 @@ export default new (class Guild {
 			Games.ClashRoyale,
 			Games.BrawlStars,
 		]) {
-			const guild = await fetch(
+			const guild = await Game.fetch(
 				game,
 				game == "BrawlStars" ? "clubs" : "clans",
 				{

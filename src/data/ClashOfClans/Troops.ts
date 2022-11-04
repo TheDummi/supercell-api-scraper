@@ -1,4 +1,4 @@
-import { Resource, TroopType, Village } from "../../types/ClashOfClans.js";
+import { Resource, TroopType, Village } from "./types.js";
 
 export default [
 	{

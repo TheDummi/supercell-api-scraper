@@ -25,21 +25,15 @@ export function statusCodes(status: Record<"message", string>) {
  * @param {Games} game - The game.
  */
 export function hasAPIToken(game: Games) {
-	if (
-		game === Games.ClashOfClans &&
-		!Collection[Games.ClashOfClans.toLowerCase()]
-	)
+	if (game === Games.ClashOfClans && !Object.hasOwn(Collection, game))
 		throw new Error(
 			"Can't use this method without having a Clash of Clans API token."
 		);
-	if (
-		game === Games.ClashRoyale &&
-		!Collection[Games.ClashRoyale.toLowerCase()]
-	)
+	if (game === Games.ClashRoyale && !Object.hasOwn(Collection, game))
 		throw new Error(
 			"Can't use this method without having a Clash Royale API token."
 		);
-	if (game === Games.BrawlStars && !Collection[Games.BrawlStars.toLowerCase()])
+	if (game === Games.BrawlStars && !Object.hasOwn(Collection, game))
 		throw new Error(
 			"Can't use this method without having a Brawl Stars API token."
 		);

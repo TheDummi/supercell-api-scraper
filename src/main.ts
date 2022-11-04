@@ -3,22 +3,37 @@ import Collection from "./data/Collection.js";
 import Player from "./models/Player.js";
 import Status from "./models/Status.js";
 import Guild from "./models/Guild.js";
-import { Games, FormattedGames, Game } from "./data/Games.js";
+import { Games, FormattedGames } from "./data/Games.js";
 import Ping from "./models/Ping.js";
 import Util from "./models/Util.js";
-import fetch from "./models/Fetch.js";
+import Game from "./models/Game.js";
+// import fetch from "./models/Fetch.js";
 
-export { Player, Status, Guild, Games, FormattedGames, Ping, Util, fetch };
+export { Player, Status, Guild, Games, FormattedGames, Ping, Util, Game };
 
+interface GameNames {
+	ClashOfClans?: string;
+	ClashRoyale?: string;
+	BrawlStars?: string;
+}
+
+interface Options {
+	options?: object;
+	tokens: GameNames;
+}
 export default class SupercellHandler {
-	gameOptions: Game;
+	tokens: GameNames;
 
-	constructor(gameOptions: Game) {
-		this.gameOptions = gameOptions;
+	constructor(options: Options) {
+		this.tokens = options.tokens;
 
-		Object.entries(gameOptions).map(
-			([game, value]) => (Collection[game.toLowerCase()] = value)
-		);
+		if (this.tokens.ClashOfClans)
+			Collection.ClashOfClans = this.tokens.ClashOfClans;
+
+		if (this.tokens.ClashRoyale)
+			Collection.ClashRoyale = this.tokens.ClashRoyale;
+
+		if (this.tokens.BrawlStars) Collection.BrawlStars = this.tokens.BrawlStars;
 
 		return this;
 	}

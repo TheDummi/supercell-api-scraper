@@ -1,6 +1,6 @@
 import { Games } from "../data/Games.js";
 import { statusCodes } from "./Functions.js";
-import fetch from "./Fetch.js";
+import Game from "./Game.js";
 
 export default new (class Status {
 	async all() {
@@ -12,14 +12,14 @@ export default new (class Status {
 	}
 
 	async clashOfClans() {
-		return statusCodes(await fetch(Games.ClashOfClans, "leagues", {}));
+		return statusCodes(await Game.fetch(Games.ClashOfClans, "leagues", {}));
 	}
 
 	async clashRoyale() {
-		return statusCodes(await fetch(Games.ClashRoyale, "cards", {}));
+		return statusCodes(await Game.fetch(Games.ClashRoyale, "cards", {}));
 	}
 
 	async brawlStars() {
-		return statusCodes(await fetch(Games.BrawlStars, "brawlers", {}));
+		return statusCodes(await Game.fetch(Games.BrawlStars, "brawlers", {}));
 	}
 })();

@@ -1,19 +1,4 @@
-import { Resource, TroopType, Village } from "../types/ClashOfClans.js";
-
-/**
- * Interface for a Clash of Clans troop.
- */
-export interface ClashOfClansTroop {
-	name?: string;
-	currentLevel?: number;
-	currentMaxLevel?: number;
-	maxLevel?: number;
-	level?: number;
-	type?: string;
-	resource?: Resource;
-	village?: string;
-	levels?: Record<string, number>;
-}
+import { Resource, TroopType, Village } from "../data/ClashOfClans/types.js";
 
 /**
  * Interface for a Clash Royale card.

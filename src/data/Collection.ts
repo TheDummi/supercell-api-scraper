@@ -1,5 +1,7 @@
 interface Collected {
-	[index: string]: object;
+	ClashOfClans?: string;
+	ClashRoyale?: string;
+	BrawlStars?: string;
 }
 
 const Collection: Collected = {};
