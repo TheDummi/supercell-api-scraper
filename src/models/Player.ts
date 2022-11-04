@@ -1,19 +1,23 @@
 import assets from "../data/ClashOfClans/Troops.js";
+import Collection from "../data/Collection.js";
 import { Games } from "../data/Games.js";
 import { ClashOfClansModification } from "../interfaces/Modifications.js";
 import { ClashOfClansTroop } from "../interfaces/Troops.js";
 import Util from "../models/Util.js";
 import fetch from "./Fetch.js";
+import { hasAPIToken } from "./Functions.js";
 
 export default new (class Player {
 	async findPlayer(tag: string) {
-		const players: Array<{}> = [];
+		const players: Array<Record<string, string>> = [];
 
 		for (const game of [
 			Games.BrawlStars,
 			Games.ClashOfClans,
 			Games.ClashRoyale,
 		]) {
+			if (!Collection[game.toLowerCase()]) continue;
+
 			const player = await fetch(game, "players", { tag });
 
 			if (player.tag) {
@@ -31,6 +35,8 @@ export default new (class Player {
 	}
 
 	async fetchChief(tag: string) {
+		hasAPIToken(Games.ClashOfClans);
+
 		let player: ClashOfClansModification = await fetch(
 			Games.ClashOfClans,
 			"players",
@@ -43,12 +49,16 @@ export default new (class Player {
 	}
 
 	async fetchKing(tag: string) {
+		hasAPIToken(Games.ClashRoyale);
+
 		const player: object = await fetch(Games.ClashRoyale, "players", { tag });
 
 		return player;
 	}
 
 	async fetchBrawler(tag: string) {
+		hasAPIToken(Games.BrawlStars);
+
 		const player: object = await fetch(Games.BrawlStars, "players", { tag });
 
 		return player;

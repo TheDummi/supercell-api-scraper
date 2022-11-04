@@ -14,7 +14,7 @@ export enum Games {
 }
 
 export enum FormattedGames {
-	ClashOfClans = "Clash Of Clans",
+	ClashOfClans = "Clash of Clans",
 	ClashRoyale = "Clash Royale",
 	BrawlStars = "Brawl Stars",
 }
