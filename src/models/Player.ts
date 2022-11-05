@@ -3,8 +3,8 @@ import { Village } from "../data/ClashOfClans/types.js";
 import Collection from "../data/Collection.js";
 import { Games } from "../data/Games.js";
 import {
-	ClashOfClansData,
-	ClashOfClansModifiedData,
+	ClashOfClansPlayerData,
+	ClashOfClansModifiedPlayerData,
 	ClashOfClansTroop,
 } from "../interfaces/Modifications.js";
 import Util from "../models/Util.js";
@@ -52,10 +52,10 @@ export default new (class Player {
 	 * @param {boolean} raw - Whether to get the raw data or not.
 	 * @returns Clash of Clans player.
 	 */
-	async fetchChief(
+	async fetchClashOfClansPlayer(
 		tag: string,
 		raw: boolean = false
-	): Promise<ClashOfClansModifiedData | ClashOfClansData> {
+	): Promise<ClashOfClansModifiedPlayerData | ClashOfClansPlayerData> {
 		hasAPIToken(Games.ClashOfClans);
 
 		let player = await Game.fetch(Games.ClashOfClans, "players", { tag });
@@ -65,7 +65,7 @@ export default new (class Player {
 		return player;
 	}
 
-	async fetchKing(tag: string, raw: boolean = false) {
+	async fetchClashRoyalePlayer(tag: string, raw: boolean = false) {
 		hasAPIToken(Games.ClashRoyale);
 
 		const player: object = await Game.fetch(Games.ClashRoyale, "players", {
@@ -75,7 +75,7 @@ export default new (class Player {
 		return player;
 	}
 
-	async fetchBrawler(tag: string, raw: boolean = false) {
+	async fetchBrawlStarsPlayer(tag: string, raw: boolean = false) {
 		hasAPIToken(Games.BrawlStars);
 
 		const player: object = await Game.fetch(Games.BrawlStars, "players", {
@@ -85,7 +85,7 @@ export default new (class Player {
 		return player;
 	}
 
-	#ClashOfClansModify(info: ClashOfClansData) {
+	#ClashOfClansModify(info: ClashOfClansPlayerData) {
 		const troops = [
 				...(info.troops || []),
 				...(info.heroes || []),
@@ -158,7 +158,7 @@ export default new (class Player {
 				};
 			}),
 			achievements = info.achievements,
-			data: ClashOfClansModifiedData = {
+			data: ClashOfClansModifiedPlayerData = {
 				player,
 				homeBase,
 				builderBase,

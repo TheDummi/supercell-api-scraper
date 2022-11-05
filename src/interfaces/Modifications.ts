@@ -1,3 +1,4 @@
+import * as BrawlStars from "../data/BrawlStars/interfaces.js";
 import * as ClashOfClans from "../data/ClashOfClans/interfaces.js";
 import { Village } from "../data/ClashOfClans/types.js";
 
@@ -8,7 +9,7 @@ export interface ClashOfClansTroop {
 	village: Village.Home | Village.BuilderBase;
 }
 
-export interface ClashOfClansData {
+export interface ClashOfClansPlayerData {
 	tag: string;
 	name: string;
 	townHallLevel: number;
@@ -46,10 +47,11 @@ export interface ClashOfClansData {
 	heroes?: Array<ClashOfClansTroop>;
 	spells?: Array<ClashOfClansTroop>;
 }
+
 /**
  * Interface for Clash of Clans modified data.
  */
-export interface ClashOfClansModifiedData {
+export interface ClashOfClansModifiedPlayerData {
 	player: ClashOfClans.Player;
 	homeBase: ClashOfClans.HomeBase;
 	builderBase: ClashOfClans.BuilderBase;
@@ -59,12 +61,127 @@ export interface ClashOfClansModifiedData {
 	achievements: Array<ClashOfClans.Achievement>;
 }
 
+export interface ClashOfClansClanData {
+	tag: string;
+	name: string;
+	type: string;
+	description: string;
+	location: {
+		id: number;
+		name: string;
+		isCountry: boolean;
+		countryCode: string;
+	};
+	badgeUrls: ClashOfClans.URLS;
+	clanLevel: number;
+	clanPoints: number;
+	clanVersusPoints: number;
+	requiredTrophies: number;
+	warFrequency: string;
+	warWinStreak: number;
+	warWins: number;
+	warTies: number;
+	warLosses: number;
+	isWarLogPublic: boolean;
+	warLeague: { id: number; name: string };
+	members: 40;
+	memberList: Array<ClashOfClans.Member>;
+	labels: Array<ClashOfClans.Label>;
+	requiredVersusTrophies: number;
+	requiredTownhallLevel: number;
+	clanCapital: {
+		capitalHallLevel: number;
+		districts: Array<{ id: number; name: string; districtHallLevel: number }>;
+	};
+	chatLanguage: { id: number; name: string; languageCode: string };
+}
+
+export interface ClashOfClansModifiedClanData {
+	profile: {
+		tag: string;
+		name: string;
+		level: number;
+		type: string;
+		description: string;
+		location: {
+			id: number;
+			name: string;
+			isCountry: boolean;
+			countryCode: string;
+			chatLanguage: { id: number; name: string; languageCode: string };
+		};
+		labels: Array<ClashOfClans.Label>;
+		badgeUrls: ClashOfClans.URLS;
+	};
+	homeBase: {
+		trophies: number;
+		requirements: {
+			trophies: number;
+			townHall: number;
+		};
+	};
+	builderBase: {
+		trophies: number;
+		requirements: {
+			trophies: number;
+		};
+	};
+	clanCapital: {
+		level: number;
+		districtCount: number;
+		districts: Array<{ id: number; name: string; districtHallLevel: number }>;
+	};
+	war: {
+		frequency: string;
+		streak: number;
+		wins: number;
+		ties: number;
+		losses: number;
+		public: boolean;
+		league: { id: number; name: string };
+	};
+	members: {
+		count: number;
+		list: Array<ClashOfClans.Member>;
+	};
+}
+
 /**
  * Interface for Clash Royale modified data.
  */
 export interface ClashRoyaleModification {}
 
+export interface BrawlStarsPlayerData {}
+
+export interface brawlStarsModifiedPlayerData {}
+
+export interface BrawlStarsClubData {
+	tag: string;
+	name: string;
+	description: string;
+	type: string;
+	badgeId: number;
+	requiredTrophies: number;
+	trophies: number;
+	members: Array<BrawlStars.Member>;
+}
 /**
  * Interface for Brawl Stars modified data.
  */
-export interface BrawlStarsModification {}
+export interface BrawlStarsModifiedClubData {
+	profile: {
+		tag: string;
+		name: string;
+		description: string;
+		type: string;
+		badgeId: number;
+		trophies: number;
+		requirements: {
+			trophies: number;
+		};
+	};
+	members: {
+		count: number;
+		list: Array<BrawlStars.Member>;
+	};
+}

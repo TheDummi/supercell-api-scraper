@@ -70,3 +70,17 @@ export interface Label {
 	name: string;
 	iconUrls: URLS;
 }
+
+export interface Member {
+	tag: string;
+	name: string;
+	role: string;
+	expLevel: number;
+	league: { id: number; name: string };
+	trophies: number;
+	versusTrophies: number;
+	clanRank: number;
+	previousClanRank: number;
+	donations: number;
+	donationsReceived: number;
+}

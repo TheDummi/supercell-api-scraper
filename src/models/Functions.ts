@@ -1,5 +1,5 @@
 import Collection from "../data/Collection.js";
-import { Games } from "../main.js";
+import { Games } from "../data/Games.js";
 
 /**
  * A function to transform error responses into status codes.
