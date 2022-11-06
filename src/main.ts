@@ -1,4 +1,10 @@
-import Collection from "./data/Collection.js";
+import {
+	Games,
+	Settings,
+	Tokens,
+	Options as Config,
+	Setting,
+} from "./data/Settings.js";
 import Player from "./models/Player.js";
 import Status from "./models/Status.js";
 import Guild from "./models/Guild.js";
@@ -8,21 +14,14 @@ import Util from "./models/Util.js";
 import Game from "./models/Game.js";
 
 export { Player, Status, Guild, Types, Ping, Util, Game };
-
-interface GameNames {
-	ClashOfClans?: string;
-	ClashRoyale?: string;
-	BrawlStars?: string;
-}
-
 interface Options {
-	options?: object;
-	tokens: GameNames;
+	options?: Settings;
+	tokens: Games;
 }
 
 export default class SupercellHandler {
-	options: {};
-	tokens: GameNames;
+	options: Settings;
+	tokens: Games;
 	player: typeof Player;
 	guild: typeof Guild;
 	status: typeof Status;
@@ -34,15 +33,18 @@ export default class SupercellHandler {
 	constructor(options: Options) {
 		this.options = options.options || {};
 
+		Object.entries(this.options).map(([option, value]) => {
+			Config[option as Setting] = value;
+		});
+
 		this.tokens = options.tokens;
 
 		if (this.tokens.ClashOfClans)
-			Collection.ClashOfClans = this.tokens.ClashOfClans;
+			Tokens.ClashOfClans = this.tokens.ClashOfClans;
 
-		if (this.tokens.ClashRoyale)
-			Collection.ClashRoyale = this.tokens.ClashRoyale;
+		if (this.tokens.ClashRoyale) Tokens.ClashRoyale = this.tokens.ClashRoyale;
 
-		if (this.tokens.BrawlStars) Collection.BrawlStars = this.tokens.BrawlStars;
+		if (this.tokens.BrawlStars) Tokens.BrawlStars = this.tokens.BrawlStars;
 
 		this.player = Player;
 

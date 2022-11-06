@@ -1,4 +1,4 @@
-import Collection from "../data/Collection.js";
+import { Tokens } from "../data/Settings.js";
 import { Games } from "../data/Games.js";
 
 /**
@@ -25,15 +25,15 @@ export function statusCodes(status: Record<"message", string>) {
  * @param {Games} game - The game.
  */
 export function hasAPIToken(game: Games) {
-	if (game === Games.ClashOfClans && !Object.hasOwn(Collection, game))
+	if (game === Games.ClashOfClans && !Object.hasOwn(Tokens, game))
 		throw new Error(
 			"Can't use this method without having a Clash of Clans API token."
 		);
-	if (game === Games.ClashRoyale && !Object.hasOwn(Collection, game))
+	if (game === Games.ClashRoyale && !Object.hasOwn(Tokens, game))
 		throw new Error(
 			"Can't use this method without having a Clash Royale API token."
 		);
-	if (game === Games.BrawlStars && !Object.hasOwn(Collection, game))
+	if (game === Games.BrawlStars && !Object.hasOwn(Tokens, game))
 		throw new Error(
 			"Can't use this method without having a Brawl Stars API token."
 		);

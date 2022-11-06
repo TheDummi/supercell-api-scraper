@@ -1,5 +1,5 @@
 import { Games } from "../data/Games.js";
-import Collection from "../data/Collection.js";
+import { Tokens } from "../data/Settings.js";
 import got from "got";
 import { statusCodes } from "./Functions.js";
 import { Options, Request } from "../interfaces/fetch.js";
@@ -16,7 +16,7 @@ export default new (class Game {
 	async fetch(game: Games, domain: string, options: Options) {
 		let request: Request = {
 				url: `https://api.${game.toLowerCase()}.com/v1/`,
-				key: Collection[Util.getGame(game) || Games.ClashOfClans],
+				key: Tokens[Util.getGame(game) || Games.ClashOfClans],
 			},
 			response;
 

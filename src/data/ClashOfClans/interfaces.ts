@@ -41,12 +41,18 @@ export interface Season {
 	league?: { id: number; name: string; iconUrls: URLS };
 }
 
-export interface Troop {
-	currentLevel: number;
+export interface ModifiedTroop extends Troop {
 	currentMaxLevel: number;
 	type: string;
 	resource: Resource;
 	levels?: Record<string, number>;
+}
+
+export interface Troop {
+	name: string;
+	level: number;
+	maxLevel: number;
+	village: Village.Home | Village.BuilderBase;
 }
 
 export interface Achievement {
