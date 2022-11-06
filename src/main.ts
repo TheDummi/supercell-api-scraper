@@ -1,5 +1,5 @@
 import {
-	Games,
+	Games as GameNames,
 	Settings,
 	Tokens,
 	Options as Config,
@@ -8,24 +8,35 @@ import {
 import Player from "./models/Player.js";
 import Status from "./models/Status.js";
 import Guild from "./models/Guild.js";
+import { Games, FormattedGames } from "./data/Games.js";
 import * as Types from "./data/Games.js";
 import Ping from "./models/Ping.js";
 import Util from "./models/Util.js";
 import Game from "./models/Game.js";
+import Rankings from "./models/Rankings.js";
 
-export { Player, Status, Guild, Types, Ping, Util, Game };
+export {
+	Player,
+	Status,
+	Guild,
+	Ping,
+	Util,
+	Game,
+	Games,
+	FormattedGames,
+	Rankings,
+};
 interface Options {
 	options?: Settings;
-	tokens: Games;
+	tokens: GameNames;
 }
 
 export default class SupercellHandler {
 	options: Settings;
-	tokens: Games;
+	tokens: GameNames;
 	player: typeof Player;
 	guild: typeof Guild;
-	status: typeof Status;
-	ping: typeof Ping;
+	rankings: typeof Rankings;
 	util: typeof Util;
 	game: typeof Game;
 	types: typeof Types;
@@ -50,9 +61,7 @@ export default class SupercellHandler {
 
 		this.guild = Guild;
 
-		this.status = Status;
-
-		this.ping = Ping;
+		this.rankings = Rankings;
 
 		this.util = Util;
 

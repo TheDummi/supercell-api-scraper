@@ -1,6 +1,6 @@
 import assets from "../data/ClashOfClans/Troops.js";
 import { Village } from "../data/ClashOfClans/types.js";
-import { Options, Tokens } from "../data/Settings.js";
+import { Tokens } from "../data/Settings.js";
 import { Games } from "../data/Games.js";
 import {
 	ClashOfClansPlayerData,
@@ -8,21 +8,37 @@ import {
 	ClashRoyalePlayerData,
 	ClashRoyaleModifiedPlayerData,
 	BrawlStarsPlayerData,
+	BrawlStarsModifiedPlayerData,
+	ClashOfClansClanData,
+	ClashOfClansModifiedClanData,
+	ClashRoyaleClanData,
+	ClashRoyaleModifiedClanData,
+	BrawlStarsClubData,
+	BrawlStarsModifiedClubData,
 } from "../interfaces/Modifications.js";
 import Util from "../models/Util.js";
 import Game from "./Game.js";
 import { hasAPIToken } from "./Functions.js";
+import Guild from "./Guild.js";
 
 /**
  * Any function related to a player can be accessed from here.
  */
 export default new (class Player {
+	constructor() {
+		this.find = this.find;
+
+		this.fetch = this.fetch;
+
+		this.fetchGuild = this.fetchGuild;
+	}
+
 	/**
 	 * A function to find all players with a the same unique ID in each game.
 	 * @param {string} tag - player tag.
 	 * @returns name, tag, game and formatted game the tag is found.
 	 */
-	async findPlayer(tag: string) {
+	async find(tag: string) {
 		const players: Array<Record<string, string>> = [];
 
 		this.#isTag(tag);
@@ -51,82 +67,78 @@ export default new (class Player {
 	}
 
 	/**
-	 * A function to get all data provided by supercell on a single Clash of Clans player.
+	 * A function to fetch player data.
 	 * @param {string} tag - Player tag
-	 * @param {boolean} raw - Whether to get the raw data or not
-	 * @returns Clash of Clans player.
+	 * @param {Games} game - The game
+	 * @param {boolean} raw - Whether to get the raw data or the modified data
+	 * @returns player data.
 	 */
-	async fetchClashOfClansPlayer(
+	async fetch(
 		tag: string,
+		game: Games,
 		raw: boolean = false
-	): Promise<ClashOfClansModifiedPlayerData | ClashOfClansPlayerData> {
-		hasAPIToken(Games.ClashOfClans);
+	): Promise<
+		| ClashOfClansModifiedPlayerData
+		| ClashOfClansPlayerData
+		| ClashRoyaleModifiedPlayerData
+		| ClashRoyalePlayerData
+		| BrawlStarsModifiedPlayerData
+		| BrawlStarsPlayerData
+		| string
+	> {
+		hasAPIToken(game);
 
-		this.#isTag(tag);
+		const player = await Game.fetch(game, "players", { tag });
 
-		let player = await Game.fetch(Games.ClashOfClans, "players", { tag });
+		if (!player.tag)
+			return `Couldn't find player with tag ${tag.toUpperCase()}`;
 
-		const check = this.#isPlayer(player, tag);
-
-		if (check) player = check;
-
-		if (!raw && typeof player !== "string")
-			player = this.#ClashOfClansModify(player);
-
-		return player;
+		if (game === Games.ClashOfClans && !raw)
+			return this.#ClashOfClansModify(player);
+		else if (game === Games.ClashRoyale && !raw)
+			return this.#ClashRoyaleModify(player);
+		else if (game === Games.BrawlStars && !raw)
+			return this.#BrawlStarsModify(player);
+		else return player;
 	}
 
 	/**
-	 * A function to get all data provided by supercell on a single Clash Royale player.
-	 * @param {string} tag - Player tag.
-	 * @param {boolean} raw - Whether to get the raw data or not
-	 * @returns Clash Royale player.
+	 * A function to get the clan or club from a player tag.
+	 * @param {string} tag - Player tag
+	 * @param {Games} game - The game
+	 * @param {boolean} raw - Whether to get the raw data or modified data
+	 * @returns clan or club data.
 	 */
-	async fetchClashRoyalePlayer(
+	async fetchGuild(
 		tag: string,
+		game: Games,
 		raw: boolean = false
-	): Promise<ClashRoyaleModifiedPlayerData | ClashOfClansPlayerData> {
-		hasAPIToken(Games.ClashRoyale);
+	): Promise<
+		| ClashOfClansClanData
+		| ClashOfClansModifiedClanData
+		| ClashRoyaleClanData
+		| ClashRoyaleModifiedClanData
+		| BrawlStarsClubData
+		| BrawlStarsModifiedClubData
+		| string
+	> {
+		hasAPIToken(game);
 
-		this.#isTag(tag);
+		const player = await Game.fetch(game, "players", { tag });
 
-		let player = await Game.fetch(Games.ClashRoyale, "players", {
-			tag,
-		});
+		if (!player.tag)
+			return `Couldn't find player with tag ${tag.toUpperCase()}`;
 
-		const check = this.#isPlayer(player, tag);
+		if (!player.clan && !player.club)
+			return `${player.name} (${player.tag}) is not in a clan or club.`;
 
-		if (check) player = check;
-
-		if (!raw && typeof player !== "string")
-			player = this.#ClashRoyaleModify(player);
-
-		return player;
-	}
-
-	/**
-	 * A function to get all data provided by supercell on a single Brawl Stars player.
-	 * @param {string} tag - Player tag.
-	 * @param {boolean} raw - Whether to get the raw data or not
-	 * @returns Brawl Stars player.
-	 */
-	async fetchBrawlStarsPlayer(tag: string, raw: boolean = false) {
-		hasAPIToken(Games.BrawlStars);
-
-		this.#isTag(tag);
-
-		let player = await Game.fetch(Games.BrawlStars, "players", {
-			tag,
-		});
-
-		const check = this.#isPlayer(player, tag);
-
-		if (check) player = check;
-
-		if (!raw && typeof player !== "string")
-			player = this.#BrawlStarsModify(player);
-
-		return player;
+		if (game === Games.ClashOfClans)
+			return this.#fetchClan(player.clan.tag, game, raw);
+		else if (game === Games.ClashRoyale)
+			return this.#fetchClan(player.clan.tag, game, raw);
+		else if (game === Games.BrawlStars)
+			return this.#fetchClan(player.club.tag, game, raw);
+		else return this.#fetchClan(player.club || player.clan, game, raw);
 	}
 
 	#ClashOfClansModify(info: ClashOfClansPlayerData) {
@@ -292,19 +304,49 @@ export default new (class Player {
 	}
 
 	#BrawlStarsModify(info: BrawlStarsPlayerData) {
-		return info;
+		const profile = {
+				tag: info.tag,
+				name: info.name,
+				color: {
+					rgba: info.nameColor.toUpperCase(),
+					hex: `#${info.nameColor.slice(2, 8).toUpperCase()}`,
+				},
+				icon: info.icon.id,
+				trophies: info.trophies,
+				trophyRecord: info.highestTrophies,
+				level: info.expLevel,
+				totalXp: info.expPoints,
+			},
+			battle = {
+				wins:
+					info["3vs3Victories"] + info.duoVictories + info.soloVictories || 0,
+				"3vs3": info["3vs3Victories"] || 0,
+				duo: info.duoVictories || 0,
+				solo: info.soloVictories || 0,
+				time: {
+					roboRumble: info.bestRoboRumbleTime || 0,
+					bigBrawler: info.bestTimeAsBigBrawler || 0,
+				},
+			},
+			guild = {
+				tag: info.club.tag,
+				name: info.club.name,
+			},
+			brawlers = info.brawlers,
+			data: BrawlStarsModifiedPlayerData = {
+				profile,
+				battle,
+				guild,
+				brawlers,
+			} as const;
+		return data;
 	}
 
 	#isTag(tag: string) {
 		if (!tag) throw new Error("No tag provided.");
 	}
 
-	#isPlayer(
-		player: ClashOfClansPlayerData | ClashOfClansPlayerData,
-		// | BrawlStarsPlayerData,
-		tag: string
-	) {
-		if (!player.tag)
-			return `Couldn't find player with tag ${tag.toUpperCase()}.`;
+	async #fetchClan(tag: string, game: Games, raw: boolean = false) {
+		return await Guild.fetch(tag, game, raw);
 	}
 })();

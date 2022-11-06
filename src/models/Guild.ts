@@ -13,12 +13,17 @@ import Util from "./Util.js";
  * The Class constructor for anything to do with a Guild.
  */
 export default new (class Guild {
+	constructor() {
+		this.find = this.find;
+
+		this.fetch = this.fetch;
+	}
 	/**
 	 * A function to get figure out which games have this tag for their clan or club.
 	 * @param {string} tag - A string of a clan or club.
 	 * @returns An array with object data.
 	 */
-	async findGuild(tag: string) {
+	async find(tag: string) {
 		const guilds: object[] = [];
 
 		for (const game of [
@@ -47,52 +52,24 @@ export default new (class Guild {
 		if (guilds.length > 0) return guilds;
 		else return "No guilds found with tag " + tag;
 	}
-	/**
-	 * A function to get all info on a clan in Clash of Clans.
-	 * @param {string} tag - A clan tag of a Clash of Clans clan.
-	 * @param {boolean} raw - Whether to get the raw data or not.
-	 * @returns an object with all data of a clan
-	 */
-	async fetchClashOfClansClan(tag: string, raw: boolean = false) {
-		hasAPIToken(Games.ClashOfClans);
 
-		let guild = await Game.fetch(Games.ClashOfClans, "clans", { tag });
+	async fetch(tag: string, game: Games, raw: boolean = false) {
+		const guild = await Game.fetch(
+			game,
+			game === Games.BrawlStars ? "clubs" : "clans",
+			{ tag }
+		);
 
-		if (!raw) guild = this.#ClashOfClansModify(guild);
+		if (!guild.tag)
+			return `Couldn't find clan or club with tag ${tag.toUpperCase()}`;
 
-		return guild;
-	}
-
-	/**
-	 * A function to get all info on a clan in Clash Royale.
-	 * @param {string} tag - A clan tag of a Clash Royale clan.
-	 * @param {boolean} raw - Whether to get the raw data or not.
-	 * @returns an object with all data of a clan
-	 */
-	async fetchClashRoyaleClan(tag: string, raw: boolean = false) {
-		hasAPIToken(Games.ClashRoyale);
-
-		let guild = await Game.fetch(Games.ClashRoyale, "clans", { tag });
-
-		if (!raw) guild = this.#ClashRoyaleModify(guild);
-
-		return guild;
-	}
-
-	/**
-	 * A function to get all info on a club in Brawl Stars.
-	 * @param {string} tag - A club tag of a Brawl Stars club.
-	 * @param {boolean} raw - Whether to get the raw data or not.
-	 * @returns an object with all data of a club
-	 */
-	async fetchBrawlStarsClub(tag: string, raw: boolean = false) {
-		hasAPIToken(Games.BrawlStars);
-
-		let guild = await Game.fetch(Games.BrawlStars, "clubs", { tag });
-
-		if (!raw) guild = this.#BrawlStarsModify(guild);
-
-		return guild;
+		if (game === Games.ClashOfClans && !raw)
+			return this.#ClashOfClansModify(guild);
+		else if (game === Games.ClashRoyale && !raw)
+			return this.#ClashRoyaleModify(guild);
+		else if (game === Games.BrawlStars && !raw)
+			return this.#BrawlStarsModify(guild);
+		else return guild;
 	}
 
 	#ClashOfClansModify(info: ClashOfClansClanData) {

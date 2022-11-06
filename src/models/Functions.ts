@@ -3,7 +3,7 @@ import { Games } from "../data/Games.js";
 
 /**
  * A function to transform error responses into status codes.
- * @param {Record<string, object>} status - the error.
+ * @param {Record<"message", string>} status - the error.
  * @returns a status code.
  */
 export function statusCodes(status: Record<"message", string>) {
@@ -29,11 +29,11 @@ export function hasAPIToken(game: Games) {
 		throw new Error(
 			"Can't use this method without having a Clash of Clans API token."
 		);
-	if (game === Games.ClashRoyale && !Object.hasOwn(Tokens, game))
+	else if (game === Games.ClashRoyale && !Object.hasOwn(Tokens, game))
 		throw new Error(
 			"Can't use this method without having a Clash Royale API token."
 		);
-	if (game === Games.BrawlStars && !Object.hasOwn(Tokens, game))
+	else if (game === Games.BrawlStars && !Object.hasOwn(Tokens, game))
 		throw new Error(
 			"Can't use this method without having a Brawl Stars API token."
 		);

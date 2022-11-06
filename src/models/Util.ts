@@ -1,6 +1,12 @@
 import { FormattedGames, Games } from "../data/Games.js";
 
 export default new (class Util {
+	constructor() {
+		this.formatGame = this.formatGame;
+
+		this.getGame = this.getGame;
+	}
+
 	formatGame(game: Games) {
 		(game as string) = game.toLowerCase();
 

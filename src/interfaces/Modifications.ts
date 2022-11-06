@@ -267,12 +267,59 @@ export interface ClashRoyaleModifiedClanData {}
 /**
  * Interface for Brawl Stars player data.
  */
-export interface BrawlStarsPlayerData {}
+export interface BrawlStarsPlayerData {
+	tag: string;
+	name: string;
+	nameColor: string;
+	icon: { id: number };
+	trophies: number;
+	highestTrophies: number;
+	highestPowerPlayPoints: number;
+	expLevel: number;
+	expPoints: number;
+	isQualifiedFromChampionshipChallenge: boolean;
+	"3vs3Victories": number;
+	soloVictories: number;
+	duoVictories: number;
+	bestRoboRumbleTime: number;
+	bestTimeAsBigBrawler: number;
+	club: { tag?: string; name?: string };
+	brawlers: Array<BrawlStars.Brawler>;
+}
 
 /**
  * Interface for Brawl Stars modified player data.
  */
-export interface BrawlStarsModifiedPlayerData {}
+export interface BrawlStarsModifiedPlayerData {
+	profile: {
+		tag: string;
+		name: string;
+		color: {
+			rgba: string;
+			hex: string;
+		};
+		icon: number;
+		trophies: number;
+		trophyRecord: number;
+		level: number;
+		totalXp: number;
+	};
+	battle: {
+		wins: number;
+		"3vs3": number;
+		solo: number;
+		duo: number;
+		time: {
+			roboRumble: number;
+			bigBrawler: number;
+		};
+	};
+	guild: {
+		tag?: string;
+		name?: string;
+	};
+	brawlers: Array<BrawlStars.Brawler>;
+}
 
 /**
  * Interface for Brawl Stars club data.
