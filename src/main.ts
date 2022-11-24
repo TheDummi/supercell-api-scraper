@@ -1,5 +1,5 @@
 import {
-	Games as GameNames,
+	Games as GameTokens,
 	Settings,
 	Tokens,
 	Options as Config,
@@ -14,6 +14,7 @@ import Ping from "./models/Ping.js";
 import Util from "./models/Util.js";
 import Game from "./models/Game.js";
 import Rankings from "./models/Rankings.js";
+import ClashOfClans from "./models/ClashOfClans/Game.js";
 
 export {
 	Player,
@@ -27,47 +28,31 @@ export {
 	Rankings,
 };
 interface Options {
-	options?: Settings;
-	tokens: GameNames;
+	ClashOfClans: {
+		token: string;
+		fetchAll: boolean;
+		logging: boolean;
+	};
+	ClashRoyale: {
+		token: string;
+		fetchAll: boolean;
+		logging: boolean;
+	};
+	BrawlStars: {
+		token: string;
+		fetchAll: boolean;
+		logging: boolean;
+	};
 }
 
 export default class SupercellHandler {
-	options: Settings;
-	tokens: GameNames;
-	player: typeof Player;
-	guild: typeof Guild;
-	rankings: typeof Rankings;
-	util: typeof Util;
-	game: typeof Game;
-	types: typeof Types;
+	options: Options;
+	ClashOfClans: object;
 
 	constructor(options: Options) {
-		this.options = options.options || {};
+		this.options = options;
 
-		Object.entries(this.options).map(([option, value]) => {
-			Config[option as Setting] = value;
-		});
-
-		this.tokens = options.tokens;
-
-		if (this.tokens.ClashOfClans)
-			Tokens.ClashOfClans = this.tokens.ClashOfClans;
-
-		if (this.tokens.ClashRoyale) Tokens.ClashRoyale = this.tokens.ClashRoyale;
-
-		if (this.tokens.BrawlStars) Tokens.BrawlStars = this.tokens.BrawlStars;
-
-		this.player = Player;
-
-		this.guild = Guild;
-
-		this.rankings = Rankings;
-
-		this.util = Util;
-
-		this.game = Game;
-
-		this.types = Types;
+		this.ClashOfClans = new ClashOfClans(options);
 
 		return this;
 	}
