@@ -1,4 +1,3 @@
-import { Tokens } from "../data/Settings.js";
 import { Games } from "../data/Games.js";
 
 /**
@@ -17,24 +16,5 @@ export function statusCodes(status: Record<"message", string>) {
 		return { online: false, code: 429, info: "Service hit a rate limit" };
 	else if (status.message.includes("503"))
 		return { online: false, code: 503, info: "Service under maintenance" };
-	else return { online: false, code: 503, info: "Service unreachable" };
-}
-
-/**
- * A function to check if the current method has an API token.
- * @param {Games} game - The game.
- */
-export function hasAPIToken(game: Games) {
-	if (game === Games.ClashOfClans && !Object.hasOwn(Tokens, game))
-		throw new Error(
-			"Can't use this method without having a Clash of Clans API token."
-		);
-	else if (game === Games.ClashRoyale && !Object.hasOwn(Tokens, game))
-		throw new Error(
-			"Can't use this method without having a Clash Royale API token."
-		);
-	else if (game === Games.BrawlStars && !Object.hasOwn(Tokens, game))
-		throw new Error(
-			"Can't use this method without having a Brawl Stars API token."
-		);
+	else return { online: false, code: 504, info: "Service unreachable" };
 }

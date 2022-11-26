@@ -10,17 +10,14 @@ export async function fetch(
 	const url = `https://api.${game.toLowerCase()}.com/v1/`;
 
 	let request = url,
-		response:
-			| null
-			| Record<"body", string>
-			| Record<string, number | string | "online" | "offline" | boolean> = null;
+		response: any = null;
 
 	if (domain) request += domain;
 
-	if (options?.tag) request += `/%20${options.tag.replace(/#/g, "")}`;
+	if (options?.tag) request += `/%23${options.tag.replace(/#/g, "")}`;
 
 	if (options?.subdomain) request += `/${options.subdomain}`;
-
+	// console.log(request);
 	try {
 		response = await got.get({
 			url: request,

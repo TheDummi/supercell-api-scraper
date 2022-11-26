@@ -1,12 +1,12 @@
-import { Games } from "../../main.js";
+import { Games } from "../../data/Games.js";
 import { statusCodes } from "../Functions.js";
 import * as Tools from "../Tools.js";
-import Clans from "./Clans.js";
-import Events from "./Events.js";
-import Labels from "./labels.js";
-import Leagues from "./leagues.js";
-import Locations from "./Locations.js";
-import Player from "./Players.js";
+import Clans from "./classes/Clans.js";
+import Events from "./classes/Events.js";
+import Labels from "./classes/Labels.js";
+import Leagues from "./classes/Leagues.js";
+import Locations from "./classes/Locations.js";
+import Player from "./classes/Players.js";
 
 export default class ClashOfClans {
 	options: any;
@@ -18,7 +18,7 @@ export default class ClashOfClans {
 	labels: any;
 
 	constructor(options: any) {
-		this.options = options.ClashOfClans;
+		this.options = options.ClashOfClans || null;
 
 		this.players = new Player(this.options);
 
@@ -48,14 +48,19 @@ export default class ClashOfClans {
 	}
 
 	async status() {
-		const response = await this.#fetch("goldpass/seasons/current");
-		console.log(response);
-		if ((response as { startTime: number }).startTime)
+		const response = await this.#fetch("locations");
+
+		if ((response as { items: string }).items)
 			return statusCodes({ message: "" });
 		else return response;
 	}
 
 	async #fetch(domain: string, options?: Record<string, string>) {
+		if (!this.options?.token)
+			throw new Error(
+				`To use this method for Clash of Clans you are required to have a valid token.`
+			);
+
 		return await Tools.fetch(
 			this.options.token,
 			Games.ClashOfClans,
