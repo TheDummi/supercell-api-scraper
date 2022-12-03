@@ -1,4 +1,4 @@
-export default class Player {
+export default class Guild {
 	#client: any;
 
 	constructor(client: any) {
@@ -10,16 +10,17 @@ export default class Player {
 
 		return this;
 	}
+
 	async find(tag: string) {
 		return {
-			"Clash Of Clans": (await this.#client.ClashOfClans.players.find(tag))
-				.profile,
+			"Clash of Clans":
+				(await this.#client.ClashOfClans.clans.find(tag)).profile || null,
 			"Clash Royale": null,
 			"Brawl Stars": null,
 		};
 	}
 
-	async clashOfClans(tag: string, raw = false) {
-		return await this.#client.ClashOfClans.players.find(tag, raw);
+	async clashOfClans(tag: string, raw: boolean = false) {
+		return await this.#client.ClashOfClans.clans.find(tag, raw);
 	}
 }

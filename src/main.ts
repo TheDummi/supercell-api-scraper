@@ -3,6 +3,7 @@ import ClashRoyale from "./models/ClashRoyale/index.js";
 import BrawlStars from "./models/BrawlStars/index.js";
 import WebSocket from "./models/classes/Websocket.js";
 import Player from "./models/classes/Player.js";
+import Guild from "./models/classes/Guild.js";
 interface Options {
 	ClashOfClans: {
 		token: string;
@@ -27,6 +28,7 @@ export default class SupercellHandler {
 	ClashRoyale: object;
 	BrawlStars: object;
 	player: object;
+	guild: object;
 	ws: object;
 
 	constructor(options: Options) {
@@ -39,6 +41,8 @@ export default class SupercellHandler {
 		this.BrawlStars = new BrawlStars(options);
 
 		this.player = new Player(this);
+
+		this.guild = new Guild(this);
 
 		this.ws = new WebSocket(this);
 

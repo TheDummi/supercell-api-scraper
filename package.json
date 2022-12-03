@@ -1,6 +1,6 @@
 {
 	"name": "supercell-api-scraper",
-	"version": "1.4.0",
+	"version": "1.4.1",
 	"description": "A supercell games scraper that has additional calculations and info, easy to use methods. [BETA]",
 	"main": "dist/main.js",
 	"scripts": {
