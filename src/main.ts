@@ -1,51 +1,5 @@
-import ClashOfClans from "./models/ClashOfClans/index.js";
-import ClashRoyale from "./models/ClashRoyale/index.js";
-import BrawlStars from "./models/BrawlStars/index.js";
-import WebSocket from "./models/classes/Websocket.js";
-import Player from "./models/classes/Player.js";
-import Guild from "./models/classes/Guild.js";
-interface Options {
-	ClashOfClans: {
-		token: string;
-		fetchAll: boolean;
-		logging: boolean;
-	};
-	ClashRoyale: {
-		token: string;
-		fetchAll: boolean;
-		logging: boolean;
-	};
-	BrawlStars: {
-		token: string;
-		fetchAll: boolean;
-		logging: boolean;
-	};
-}
+import Client from './client/client.js';
 
-export default class SupercellHandler {
-	options: Options;
-	ClashOfClans: object;
-	ClashRoyale: object;
-	BrawlStars: object;
-	player: object;
-	guild: object;
-	ws: object;
+export default Client;
 
-	constructor(options: Options) {
-		this.options = options;
-
-		this.ClashOfClans = new ClashOfClans(options);
-
-		this.ClashRoyale = new ClashRoyale(options);
-
-		this.BrawlStars = new BrawlStars(options);
-
-		this.player = new Player(this);
-
-		this.guild = new Guild(this);
-
-		this.ws = new WebSocket(this);
-
-		return this;
-	}
-}
+export { Client };

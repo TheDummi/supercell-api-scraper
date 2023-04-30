@@ -23,8 +23,8 @@
 		"url": "https://github.com/TheDummi/supercell-api-scraper/issues"
 	},
 	"homepage": "https://github.com/TheDummi/supercell-api-scraper#readme",
+	"packageManager": "npm@8.15.0",
 	"dependencies": {
-		"got": "^12.5.2"
-	},
-	"packageManager": "npm@8.15.0"
+		"zod": "^3.21.4"
+	}
 }
