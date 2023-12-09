@@ -1,10 +1,10 @@
 export default class SupercellError {
-	public declare readonly name;
-	public declare readonly message;
+  public declare readonly name;
+  public declare readonly message;
 
-	constructor(message?: string) {
-		this.name = 'SupercellError';
+  constructor(message?: string) {
+    this.name = "SupercellError";
 
-		this.message = message || 'Error';
-	}
+    this.message = message || "Error";
+  }
 }

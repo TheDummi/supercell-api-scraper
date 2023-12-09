@@ -1,21 +1,21 @@
 export default class Labels {
-	#options: any;
+  #options: any;
 
-	constructor(options: any) {
-		this.#options = options;
+  constructor(options: any) {
+    this.#options = options;
 
-		this.players = this.players;
+    this.players = this.players;
 
-		this.clans = this.clans;
+    this.clans = this.clans;
 
-		return this;
-	}
+    return this;
+  }
 
-	players() {
-		"/labels/players";
-	}
+  players() {
+    "/labels/players";
+  }
 
-	clans() {
-		"/labels/clans";
-	}
+  clans() {
+    "/labels/clans";
+  }
 }

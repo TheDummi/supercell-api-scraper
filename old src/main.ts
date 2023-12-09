@@ -5,47 +5,47 @@ import WebSocket from "./models/classes/Websocket.js";
 import Player from "./models/classes/Player.js";
 import Guild from "./models/classes/Guild.js";
 interface Options {
-	ClashOfClans: {
-		token: string;
-		fetchAll: boolean;
-		logging: boolean;
-	};
-	ClashRoyale: {
-		token: string;
-		fetchAll: boolean;
-		logging: boolean;
-	};
-	BrawlStars: {
-		token: string;
-		fetchAll: boolean;
-		logging: boolean;
-	};
+  ClashOfClans: {
+    token: string;
+    fetchAll: boolean;
+    logging: boolean;
+  };
+  ClashRoyale: {
+    token: string;
+    fetchAll: boolean;
+    logging: boolean;
+  };
+  BrawlStars: {
+    token: string;
+    fetchAll: boolean;
+    logging: boolean;
+  };
 }
 
 export default class SupercellHandler {
-	options: Options;
-	ClashOfClans: object;
-	ClashRoyale: object;
-	BrawlStars: object;
-	player: object;
-	guild: object;
-	ws: object;
+  options: Options;
+  ClashOfClans: object;
+  ClashRoyale: object;
+  BrawlStars: object;
+  player: object;
+  guild: object;
+  ws: object;
 
-	constructor(options: Options) {
-		this.options = options;
+  constructor(options: Options) {
+    this.options = options;
 
-		this.ClashOfClans = new ClashOfClans(options);
+    this.ClashOfClans = new ClashOfClans(options);
 
-		this.ClashRoyale = new ClashRoyale(options);
+    this.ClashRoyale = new ClashRoyale(options);
 
-		this.BrawlStars = new BrawlStars(options);
+    this.BrawlStars = new BrawlStars(options);
 
-		this.player = new Player(this);
+    this.player = new Player(this);
 
-		this.guild = new Guild(this);
+    this.guild = new Guild(this);
 
-		this.ws = new WebSocket(this);
+    this.ws = new WebSocket(this);
 
-		return this;
-	}
+    return this;
+  }
 }

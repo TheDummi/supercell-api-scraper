@@ -1,33 +1,33 @@
 export default class Leagues {
-	#options: any;
+  #options: any;
 
-	constructor(options: any) {
-		this.#options = options;
+  constructor(options: any) {
+    this.#options = options;
 
-		this.player = this.player;
+    this.player = this.player;
 
-		this.war = this.war;
+    this.war = this.war;
 
-		this.seasons = this.seasons;
+    this.seasons = this.seasons;
 
-		return this;
-	}
+    return this;
+  }
 
-	player(id?: number) {
-		undefined;
-		("/leagues");
-		("/leagues/{leagueId}");
-	}
+  player(id?: number) {
+    undefined;
+    ("/leagues");
+    ("/leagues/{leagueId}");
+  }
 
-	war(id?: number) {
-		undefined;
-		("/warleagues");
-		("/warleagues/{warleagueId}");
-	}
+  war(id?: number) {
+    undefined;
+    ("/warleagues");
+    ("/warleagues/{warleagueId}");
+  }
 
-	seasons(leagueId: number, seasonId?: number) {
-		undefined;
-		("/leagues/{leagueId}/seasons");
-		("/leagues/{leagueId}/seasons/{seasonId}");
-	}
+  seasons(leagueId: number, seasonId?: number) {
+    undefined;
+    ("/leagues/{leagueId}/seasons");
+    ("/leagues/{leagueId}/seasons/{seasonId}");
+  }
 }

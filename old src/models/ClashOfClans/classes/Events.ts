@@ -1,23 +1,23 @@
 export default class Events {
-	#options: any;
+  #options: any;
 
-	constructor(options: any) {
-		this.#options = options;
+  constructor(options: any) {
+    this.#options = options;
 
-		this.goldPass = this.goldPass;
+    this.goldPass = this.goldPass;
 
-		this.clanGames = this.clanGames;
+    this.clanGames = this.clanGames;
 
-		this.clanWarLeagues = this.clanWarLeagues;
+    this.clanWarLeagues = this.clanWarLeagues;
 
-		return this;
-	}
+    return this;
+  }
 
-	goldPass() {
-		"/goldpass/seasons/current";
-	}
+  goldPass() {
+    "/goldpass/seasons/current";
+  }
 
-	clanGames() {}
+  clanGames() {}
 
-	clanWarLeagues() {}
+  clanWarLeagues() {}
 }
